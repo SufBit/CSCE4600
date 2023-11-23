@@ -83,6 +83,11 @@ func handleInput(w io.Writer, input string, exit chan<- struct{}) error {
 		return nil
 	case "mkdir": // Add a case for the new command
         return builtins.MakeDirectory(args...)
+	case "touch":
+		return builtins.Touch(args...)
+	case "ls":
+		return builtins.ListDirectory(os.Stdout, args...)
+	
 	}
 
 	return executeCommand(name, args...)
