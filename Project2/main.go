@@ -80,19 +80,20 @@ func handleInput(w io.Writer, input string, exit chan<- struct{}) error {
 		return builtins.EnvironmentVariables(w, args...)
 	case "exit":
 		exit <- struct{}{}
-		return nil
-	case "mkdir": // Add a case for the new command
-        return builtins.MakeDirectory(args...)
-	case "touch":
-		return builtins.Touch(args...)
-	case "ls":
-		return builtins.ListDirectory(os.Stdout, args...)
-	case "rm":
-		return builtins.RemoveDirectory(args...)	
+		return nil	
 	case "pwd":
 		return builtins.PrintWorkingDirectory(w)
-	}
+	case "echo":
+        return builtins.Echo(w, args...)
+	case "which":
+		return builtins.Which(w, args...)
+	case "repeat":
+		return builtins.RepeatCommand(w, args...)
+	case "type":
+		// Join the arguments into a single string before passing to TypeCommand
+		return builtins.TypeCommand(w, strings.Join(args, " "))
 
+	}
 	return executeCommand(name, args...)
 }
 
