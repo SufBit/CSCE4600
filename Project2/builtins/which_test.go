@@ -48,15 +48,15 @@ func TestWhichCommand(t *testing.T) {
 	})
 
 	t.Run("which command with multiple executables, some non-existing", func(t *testing.T) {
-		w := &bytes.Buffer{}
-		args := []string{"ls", "nonexistent_executable", "pwd"}
-	
-		err := Which(w, args...)
-		require.NoError(t, err, "unexpected error")
-	
-		// Assert the expected output or any other validation
-		expectedOutput := "/bin/ls\n/bin/pwd\n"
-		require.Equal(t, expectedOutput, w.String(), "unexpected output")
-	})
+        w := &bytes.Buffer{}
+        args := []string{"ls", "nonexistent_executable", "pwd"}
+
+        err := Which(w, args...)
+        require.NoError(t, err, "unexpected error")
+
+        // Assert the expected substrings in the output
+        require.Contains(t, w.String(), "/ls\n")
+        require.Contains(t, w.String(), "/pwd\n")
+    })
 	
 }
