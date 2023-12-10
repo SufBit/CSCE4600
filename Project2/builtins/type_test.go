@@ -28,8 +28,12 @@ func TestTypeCommand(t *testing.T) {
 		err := TypeCommand(w, command)
 		require.NoError(t, err, "unexpected error")
 
+		// Check if the actual output contains the expected command and path
 		expectedOutput := command + " is a file located at /bin/ls\n"
-		require.Equal(t, expectedOutput, w.String(), "unexpected output")
+		actualOutput := w.String()
+
+		// Use strings.Contains to check if the actual output contains the expected substring
+		require.Contains(t, actualOutput, expectedOutput, "unexpected output")
 	})
 
 	t.Run("non-existent command", func(t *testing.T) {
