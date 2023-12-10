@@ -39,7 +39,6 @@ package builtins
 
 import (
 	"bytes"
-	"io/ioutil"
 	"os"
 	"testing"
 )
